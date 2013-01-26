@@ -5,19 +5,26 @@
 
 	<parent>
 		<groupId>com.cupofcrumley</groupId>
-		<artifactId>gyokuro-parent</artifactId>
+		<artifactId>gyokuro-web-pom</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../gyokuro-parent</relativePath>
+		<relativePath>../gyokuro-web-pom</relativePath>
 	</parent>
 
-	<name>Web</name>
-	<artifactId>gyokuro-web</artifactId>
+	<name>Example Application</name>
+	<artifactId>gyokuro-example</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+			</plugin>
+		</plugins>
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

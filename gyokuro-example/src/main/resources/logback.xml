@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<configuration>
+	<appender name='CONSOLE' class='ch.qos.logback.core.ConsoleAppender'>
+		<encoder>
+			<pattern>%d %5p | %t | %-55logger{55} | %m %n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- To enable JMX Management -->
+	<jmxConfigurator />
+
+	<logger name='com.cupofcrumley'>
+		<level value='INFO' />
+	</logger>
+
+	<root>
+		<level value='WARN' />
+		<appender-ref ref='CONSOLE' />
+	</root>
+</configuration>
