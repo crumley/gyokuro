@@ -6,19 +6,32 @@
  * ${tags}
  */</template><template autoinsert="false" context="filecomment_context" deleted="true" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/**
  * The MIT License
+<<<<<<< HEAD
  *  
  * Copyright (c) 2010-2012 Ryan Crumley
  * 
+=======
+ *
+ * Copyright (c) 2010-2012 Ryan Crumley
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
+<<<<<<< HEAD
  * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  * 
+=======
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,7 +44,11 @@
  *
  * ${tags}
  */</template><template autoinsert="true" context="fieldcomment_context" deleted="true" description="Comment for fields" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.fieldcomment" name="fieldcomment">/**
+<<<<<<< HEAD
  * 
+=======
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  */</template><template autoinsert="true" context="methodcomment_context" deleted="true" description="Comment for non-overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodcomment" name="methodcomment">/**
  * ${tags}
  */</template><template autoinsert="true" context="overridecomment_context" deleted="true" description="Comment for overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.overridecomment" name="overridecomment">/* (non-Javadoc)

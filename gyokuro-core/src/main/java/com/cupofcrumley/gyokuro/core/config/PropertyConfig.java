@@ -1,16 +1,29 @@
 /**
  * The MIT License
+<<<<<<< HEAD
  * 
  * Copyright (c) 2010-2012 Ryan Crumley
  * 
+=======
+ *
+ * Copyright (c) 2010-2012 Ryan Crumley
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+<<<<<<< HEAD
  * 
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
  * Software.
  * 
+=======
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
@@ -31,9 +44,15 @@ import org.springframework.core.env.Environment;
  * Loads configuration from properties file into Spring Environment. Default location for properties file is
  * <code>classpath:application.override.properties</code>. This can be overriden by setting the system property
  * "config.override". For example:
+<<<<<<< HEAD
  * 
  * java MainClass -Dconfig.override=file:/opt/app/myconfig.properties
  * 
+=======
+ *
+ * java MainClass -Dconfig.override=file:/opt/app/myconfig.properties
+ *
+>>>>>>> Initial commit. Core maven build + basic spring context configuration
  * @author Ryan Crumley
  */
 @Configuration
