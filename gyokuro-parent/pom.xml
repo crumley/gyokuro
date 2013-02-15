@@ -32,6 +32,10 @@
 		<liquibase.version>2.0.5</liquibase.version>
 		<javax.mail.version>1.4.5</javax.mail.version>
 		<freemarker.version>2.3.19</freemarker.version>
+		<jetty.version>8.1.8.v20121106</jetty.version>
+		<metrics.version>2.2.0</metrics.version>
+		<hibernatevalidator.version>4.2.0.Final</hibernatevalidator.version>
+		<guava.version>14.0-rc2</guava.version>
 
 		<maven.aspectj.plugin>1.4</maven.aspectj.plugin>
 		<maven.assembly.plugin>2.3</maven.assembly.plugin>
@@ -47,6 +51,7 @@
 		<maven.release.plugin>2.4</maven.release.plugin>
 		<maven.resources.plugin>2.6</maven.resources.plugin>
 		<maven.site.plugin>3.2</maven.site.plugin>
+		<maven.shade.plugin>1.7.1</maven.shade.plugin>
 		<maven.source.plugin>2.1.2</maven.source.plugin>
 		<maven.surefire.plugin>2.13</maven.surefire.plugin>
 		<maven.version.range>[3.0.0,3.1.0)</maven.version.range>
@@ -230,6 +235,7 @@
 			<artifactId>hamcrest-all</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- Logging Goodness -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -243,9 +249,10 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>uk.org.lidalia</groupId>
-			<artifactId>sysout-over-slf4j</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -309,6 +316,12 @@
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest-all</artifactId>
 				<version>${hamcrest.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
 			</dependency>
 
 			<dependency>
@@ -411,6 +424,35 @@
 				<groupId>org.freemarker</groupId>
 				<artifactId>freemarker</artifactId>
 				<version>${freemarker.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${jetty.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-webapp</artifactId>
+				<version>${jetty.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yammer.metrics</groupId>
+				<artifactId>metrics-core</artifactId>
+				<version>${metrics.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.yammer.metrics</groupId>
+				<artifactId>metrics-jetty</artifactId>
+				<version>${metrics.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernatevalidator.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
