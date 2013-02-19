@@ -61,9 +61,15 @@ public class ConfigInvocationHandler<T extends Config> implements InvocationHand
 	}
 
 	private String getKey(Method method) {
+		String prefixValue = "";
+		KeyPrefix prefix = method.getDeclaringClass().getAnnotation(KeyPrefix.class);
+		if (prefix != null) {
+			prefixValue = prefix.value();
+		}
+
 		Key key = method.getAnnotation(Config.Key.class);
 		if (key != null) {
-			return key.value();
+			return prefixValue + key.value();
 		}
 
 		String value = method.getName();
@@ -71,7 +77,8 @@ public class ConfigInvocationHandler<T extends Config> implements InvocationHand
 			value = value.substring(3).intern();
 			value = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, value);
 		}
-		return value;
+
+		return prefixValue + value;
 	}
 
 	private Object getDefault(Method method) {
