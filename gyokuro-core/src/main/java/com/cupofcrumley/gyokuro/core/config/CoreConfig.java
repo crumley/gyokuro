@@ -2,6 +2,8 @@ package com.cupofcrumley.gyokuro.core.config;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.cupofcrumley.gyokuro.config.Config;
+
 public interface CoreConfig extends Config {
 
 	@NotEmpty

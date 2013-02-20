@@ -1,27 +1,34 @@
 package com.cupofcrumley.gyokuro.core.config;
 
-import java.lang.reflect.Proxy;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
+import com.cupofcrumley.gyokuro.config.Config;
+import com.cupofcrumley.gyokuro.config.ConfigImpl;
+import com.cupofcrumley.gyokuro.config.ConfigResolver;
+
 public class ConfigFactoryBean<T extends Config> implements FactoryBean<T> {
-	private Environment env;
 	private Class<T> clazz;
 	private ConfigResolver configResolver;
+	private Validator validator;
 
+	@Autowired
 	public ConfigFactoryBean(Class<T> clazz, Environment env) {
 		this.clazz = clazz;
-		this.env = env;
 		this.configResolver = new SpringConfigResolver(env);
 	}
 
-	@SuppressWarnings("unchecked")
+	@Autowired(required = false)
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
 	@Override
 	public T getObject() throws Exception {
-		ConfigInvocationHandler<T> handler = new ConfigInvocationHandler<T>(clazz, configResolver);
-		T configInstance = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz }, handler);
-		return configInstance;
+		return ConfigImpl.newInstance(clazz, configResolver, validator);
 	}
 
 	@Override

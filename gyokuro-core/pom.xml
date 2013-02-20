@@ -15,7 +15,18 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.cupofcrumley</groupId>
+			<artifactId>gyokuro-config</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>

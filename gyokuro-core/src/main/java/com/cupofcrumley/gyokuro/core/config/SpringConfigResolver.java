@@ -2,6 +2,8 @@ package com.cupofcrumley.gyokuro.core.config;
 
 import org.springframework.core.env.Environment;
 
+import com.cupofcrumley.gyokuro.config.ConfigResolver;
+
 public class SpringConfigResolver implements ConfigResolver {
 
 	private Environment env;

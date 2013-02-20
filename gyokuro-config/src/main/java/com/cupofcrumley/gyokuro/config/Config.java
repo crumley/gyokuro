@@ -1,4 +1,4 @@
-package com.cupofcrumley.gyokuro.core.config;
+package com.cupofcrumley.gyokuro.config;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,9 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.validation.annotation.Validated;
-
-@Validated
 public interface Config {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
@@ -56,4 +53,6 @@ public interface Config {
 	public @interface DefaultClassValue {
 		Class<?> value();
 	}
+
+	public void validate();
 }

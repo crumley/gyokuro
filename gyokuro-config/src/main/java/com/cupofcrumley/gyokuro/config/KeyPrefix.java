@@ -1,4 +1,4 @@
-package com.cupofcrumley.gyokuro.core.config;
+package com.cupofcrumley.gyokuro.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

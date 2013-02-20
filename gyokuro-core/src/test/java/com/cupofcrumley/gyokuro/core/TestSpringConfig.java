@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.env.MockPropertySource;
 
+import com.cupofcrumley.gyokuro.config.Config;
+import com.cupofcrumley.gyokuro.config.KeyPrefix;
 import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.GenericTestConfig;
 import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.PrefixTestConfig;
 import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.TypeTestConfig;
-import com.cupofcrumley.gyokuro.core.config.Config;
 import com.cupofcrumley.gyokuro.core.config.EnableConfig;
-import com.cupofcrumley.gyokuro.core.config.KeyPrefix;
 import com.cupofcrumley.gyokuro.core.config.PropertyConfiguration;
 
 public class TestSpringConfig {
