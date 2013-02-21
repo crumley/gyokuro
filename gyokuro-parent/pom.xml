@@ -11,6 +11,7 @@
 	<artifactId>gyokuro-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<url>https://github.com/crumley/gyokuro</url>
 
 	<prerequisites>
 		<maven>2.2.1</maven>
@@ -72,6 +73,26 @@
 		</developer>
 	</developers>
 
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git://github.com/crumley/gyokuro.git</connection>
+		<developerConnection>scm:git:git://github.com/crumley/gyokuro.git</developerConnection>
+		<url>https://github.com/crumley/gyokuro</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/crumley/gyokuro/issues#issue/</url>
+	</issueManagement>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -80,8 +101,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven.compiler.plugin}</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
 					</configuration>
 				</plugin>
 				<plugin>
