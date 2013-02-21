@@ -33,7 +33,9 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		ConfigImpl<T> handler = new ConfigImpl<T>(clazz, configResolver);
 		handler.setValidator(validator);
 		T configInstance = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz }, handler);
-		configInstance.validate();
+		if (validator != null) {
+			configInstance.validate();
+		}
 		return configInstance;
 	}
 
@@ -106,7 +108,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 			return ret;
 		} else if (Config.class == method.getDeclaringClass()) {
 			if ("validate".equals(method.getName())) {
-				return null;
+				validate(proxy);
 			}
 		}
 
