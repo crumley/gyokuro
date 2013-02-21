@@ -55,10 +55,10 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		this.clazz = clazz;
 		this.resolver = resolver;
 
-		validateDefaultValues(null);
+		validateConfig(null);
 	}
 
-	private void validateDefaultValues(Object proxy) {
+	private void validateConfig(Object proxy) {
 		Method[] methods = this.clazz.getMethods();
 		for (Method method : methods) {
 			if ("validate".equals(method.getName())) {
@@ -73,7 +73,6 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 			}
 
 			Object defaultValue = getDefault(method);
-			validateReturnValue(this, method, defaultValue);
 			if (defaultValue != null) {
 				if (!method.getReturnType().isAssignableFrom(defaultValue.getClass())) {
 					throw new IllegalStateException("Default value provided for: " + this.clazz.getName() + "." + method.getName() + " does not match the return type.");
@@ -81,6 +80,9 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 			}
 
 			if (proxy != null) {
+				if (defaultValue != null) {
+					validateReturnValue(proxy, method, defaultValue);
+				}
 				try {
 					Object ret = method.invoke(proxy);
 					validateReturnValue(proxy, method, ret);
@@ -95,7 +97,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		if (validator == null) {
 			throw new IllegalStateException("Can't validate without a validator!");
 		}
-		validateDefaultValues(proxy);
+		validateConfig(proxy);
 	}
 
 	@Override
@@ -109,6 +111,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		} else if (Config.class == method.getDeclaringClass()) {
 			if ("validate".equals(method.getName())) {
 				validate(proxy);
+				return null;
 			}
 		}
 

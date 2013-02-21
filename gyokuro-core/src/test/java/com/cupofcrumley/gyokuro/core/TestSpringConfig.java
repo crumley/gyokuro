@@ -11,9 +11,6 @@ import org.springframework.mock.env.MockPropertySource;
 
 import com.cupofcrumley.gyokuro.config.Config;
 import com.cupofcrumley.gyokuro.config.KeyPrefix;
-import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.GenericTestConfig;
-import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.PrefixTestConfig;
-import com.cupofcrumley.gyokuro.core.TestSpringConfig.ConfigTestConfiguration.TypeTestConfig;
 import com.cupofcrumley.gyokuro.core.config.EnableConfig;
 import com.cupofcrumley.gyokuro.core.config.PropertyConfiguration;
 
@@ -40,47 +37,49 @@ public class TestSpringConfig {
 	@Configuration
 	@EnableConfig({ GenericTestConfig.class, TypeTestConfig.class, PrefixTestConfig.class })
 	@Import({ PropertyConfiguration.class })
-	static class ConfigTestConfiguration {
-		static interface GenericTestConfig extends Config {
-			String getMissingKey();
+	public interface ConfigTestConfiguration {
 
-			@Key("integerValue")
-			Integer getIntegerValueWithDifferentKey();
+	}
 
-			@DefaultIntegerValue(50)
-			Integer getDefaultIntegerValueTest();
+	public static interface GenericTestConfig extends Config {
+		String getMissingKey();
 
-			@DefaultStringValue("aabbcc")
-			String getDefaultStringValueTest();
+		@Key("integerValue")
+		Integer getIntegerValueWithDifferentKey();
 
-			@DefaultDoubleValue(1.234)
-			Double getDefaultDoubleValueTest();
+		@DefaultIntegerValue(50)
+		Integer getDefaultIntegerValueTest();
 
-			@DefaultClassValue(TestSpringConfig.class)
-			Class<?> getDefaultClassValueTest();
-		}
+		@DefaultStringValue("aabbcc")
+		String getDefaultStringValueTest();
 
-		static interface TypeTestConfig extends Config {
-			Integer getIntegerValue();
+		@DefaultDoubleValue(1.234)
+		Double getDefaultDoubleValueTest();
 
-			Double getDoubleValue();
+		@DefaultClassValue(TestSpringConfig.class)
+		Class<?> getDefaultClassValueTest();
+	}
 
-			String getStringValue();
+	public static interface TypeTestConfig extends Config {
+		Integer getIntegerValue();
 
-			Class<?> getClassValue();
-		}
+		Double getDoubleValue();
 
-		@KeyPrefix("com.cupofcrumley.")
-		static interface PrefixTestConfig extends Config {
-			@Description("Should be missing due to prefix.")
-			Integer getIntegerValue();
+		String getStringValue();
 
-			String getStringValue();
+		Class<?> getClassValue();
+	}
 
-			@Key("stringValue")
-			@Description("Ensure @KeyPrefix is prefixed to @Key value. This should be the same as getStringValue()")
-			String getStringValueWithDifferentKey();
-		}
+	@KeyPrefix("com.cupofcrumley.")
+	public static interface PrefixTestConfig extends Config {
+		@Description("Should be missing due to prefix.")
+		Integer getIntegerValue();
+
+		String getStringValue();
+
+		@Key("stringValue")
+		@Description("Ensure @KeyPrefix is prefixed to @Key value. This should be the same as getStringValue()")
+		String getStringValueWithDifferentKey();
 	}
 
 	@Test
