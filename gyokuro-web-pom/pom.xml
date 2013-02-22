@@ -18,11 +18,6 @@
 		<maven>2.2.1</maven>
 	</prerequisites>
 
-	<properties>
-		<maven.shade.plugin>1.7.1</maven.shade.plugin>
-		<jetty.version>8.1.8.v20121106</jetty.version>
-	</properties>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -73,16 +68,6 @@
 				<artifactId>gyokuro-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-server</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-webapp</artifactId>
-				<version>${jetty.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -90,14 +75,6 @@
 		<dependency>
 			<groupId>com.cupofcrumley</groupId>
 			<artifactId>gyokuro-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
 		</dependency>
 	</dependencies>
 
