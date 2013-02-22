@@ -19,7 +19,6 @@ import com.cupofcrumley.gyokuro.config.Config.DefaultDoubleValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultIntegerValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultStringValue;
 import com.cupofcrumley.gyokuro.config.Config.Key;
-import com.google.common.base.CaseFormat;
 
 public class ConfigImpl<T extends Config> implements InvocationHandler {
 	Logger logger = LoggerFactory.getLogger(ConfigImpl.class);
@@ -164,7 +163,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		String value = method.getName();
 		if (value.startsWith("get")) {
 			value = value.substring(3).intern();
-			value = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, value);
+			value = firstCharToLower(value);
 		}
 
 		return prefixValue + value;
@@ -198,5 +197,9 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 	@Override
 	public String toString() {
 		return "[Configuration: " + clazz.getName() + "]";
+	}
+
+	private static String firstCharToLower(String word) {
+		return (word.isEmpty()) ? word : new StringBuilder(word.length()).append(Character.toLowerCase(word.charAt(0))).append(word.substring(1)).toString();
 	}
 }
