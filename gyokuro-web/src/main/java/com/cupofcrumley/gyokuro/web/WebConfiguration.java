@@ -4,10 +4,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cupofcrumley.gyokuro.core.config.CoreConfig;
+import com.cupofcrumley.gyokuro.core.CoreAppConfig;
 import com.cupofcrumley.gyokuro.core.config.EnableConfig;
 import com.yammer.metrics.jetty.InstrumentedBlockingChannelConnector;
 import com.yammer.metrics.jetty.InstrumentedQueuedThreadPool;
@@ -17,11 +16,10 @@ import com.yammer.metrics.jetty.InstrumentedQueuedThreadPool;
 public class WebConfiguration {
 	Logger logger = LoggerFactory.getLogger(WebConfiguration.class);
 	
-	@Bean
-	public Server jettyServer(CoreConfig coreConfig, JettyConfig config) throws Exception {
+	public Server jettyServer(CoreAppConfig coreAppConfig, JettyConfig config) throws Exception {
 		Server server = new Server();
 
-		logger.info("Initializing jetty server with config name: {} and server name: {}", coreConfig.getConfigName());
+		logger.info("Initializing jetty server with config name: {} and server name: {}", coreAppConfig.getConfigName());
 		
 		server.addConnector(new InstrumentedBlockingChannelConnector(8080));
 

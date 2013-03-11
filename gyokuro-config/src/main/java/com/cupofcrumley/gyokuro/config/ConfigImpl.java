@@ -1,8 +1,11 @@
 package com.cupofcrumley.gyokuro.config;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Validator;
@@ -13,15 +16,17 @@ import org.hibernate.validator.method.MethodValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cupofcrumley.gyokuro.config.Config.ConfigSummary;
 import com.cupofcrumley.gyokuro.config.Config.DefaultBooleanValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultClassValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultDoubleValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultIntegerValue;
 import com.cupofcrumley.gyokuro.config.Config.DefaultStringValue;
+import com.cupofcrumley.gyokuro.config.Config.Description;
 import com.cupofcrumley.gyokuro.config.Config.Key;
 
 public class ConfigImpl<T extends Config> implements InvocationHandler {
-	Logger logger = LoggerFactory.getLogger(ConfigImpl.class);
+	private Logger log = LoggerFactory.getLogger(ConfigImpl.class);
 
 	public static <T extends Config> T newInstance(Class<T> clazz, ConfigResolver configResolver) {
 		return newInstance(clazz, configResolver, null);
@@ -31,11 +36,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 	public static <T extends Config> T newInstance(Class<T> clazz, ConfigResolver configResolver, Validator validator) {
 		ConfigImpl<T> handler = new ConfigImpl<T>(clazz, configResolver);
 		handler.setValidator(validator);
-		T configInstance = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz }, handler);
-		if (validator != null) {
-			configInstance.validate();
-		}
-		return configInstance;
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz }, handler);
 	}
 
 	private final Class<T> clazz;
@@ -57,10 +58,26 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		this.resolver = resolver;
 	}
 
+	public List<ConfigSummary> getConfigOptions() {
+		List<ConfigSummary> options = new ArrayList<ConfigSummary>();
+
+		Method[] methods = clazz.getMethods();
+		for (final Method method : methods) {
+			if (method.getDeclaringClass() == clazz) {
+				String key = getKey(method);
+				Object defaultValue = getDefault(method);
+				String description = getDescription(method);
+				options.add(new ConfigOptionImpl(method, key, description, defaultValue));
+			}
+		}
+
+		return options;
+	}
+
 	private void validateClass(Class<T> clazz) {
 		Method[] methods = clazz.getMethods();
 		for (Method method : methods) {
-			if ("validate".equals(method.getName())) {
+			if (method.getDeclaringClass() == Config.class) {
 				continue;
 			}
 
@@ -82,7 +99,6 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
 		if (clazz == method.getDeclaringClass()) {
 			validateParameters(proxy, method, args);
 			Object ret = resolveConfigProperty(method, args);
@@ -92,34 +108,34 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 			if ("validate".equals(method.getName())) {
 				validateValues(proxy);
 				return null;
+			} else if ("getConfigSummary".equals(method.getName())) {
+				return getConfigOptions();
 			}
 		}
 
 		return method.invoke(this, args);
 	}
 
-	private void validateValues(Object proxy) {
+	private void validateValues(Object proxy) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		if (validator == null) {
 			throw new IllegalStateException("Can't validate without a validator!");
 		}
 
 		Method[] methods = this.clazz.getMethods();
 		for (Method method : methods) {
-			if ("validate".equals(method.getName())) {
+			// Don't validate non config methods.
+			if (method.getDeclaringClass() == Config.class) {
 				continue;
 			}
 
+			// Ensure the default value is valid!
 			Object defaultValue = getDefault(method);
 			if (defaultValue != null) {
 				validateReturnValue(proxy, method, defaultValue);
 			}
 
-			try {
-				Object ret = method.invoke(proxy);
-				validateReturnValue(proxy, method, ret);
-			} catch (Exception e) {
-				throw new IllegalStateException("Exception evaluating method for validation: " + method, e);
-			}
+			// By invoking the method we verify the method can execute and the return value is valid.
+			method.invoke(proxy);
 		}
 	}
 
@@ -127,6 +143,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		if (validator != null) {
 			Set<MethodConstraintViolation<Object>> result = validator.validateAllParameters(proxy, method, args);
 			if (!result.isEmpty()) {
+				// TODO exception output is more complicated than we need. Simplify it.
 				throw new MethodConstraintViolationException(result);
 			}
 		}
@@ -136,6 +153,7 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		if (validator != null) {
 			Set<MethodConstraintViolation<Object>> result = validator.validateReturnValue(proxy, method, ret);
 			if (!result.isEmpty()) {
+				// TODO exception output is more complicated than we need. Simplify it. 
 				throw new MethodConstraintViolationException(result);
 			}
 		}
@@ -146,8 +164,13 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 		Object defaultValue = getDefault(method);
 		String key = getKey(method);
 		Object value = resolver.getConfigValue(key, returnType, defaultValue, args);
-		logger.info("Resolved property: '{}' to value: '{}' (default: '{}')", key, value, defaultValue);
+		log.info("Resolved property: '{}' to value: '{}' (default: '{}')", key, value, defaultValue);
 		return value;
+	}
+
+	private String getDescription(Method method) {
+		Description description = method.getAnnotation(Config.Description.class);
+		return description == null ? null : description.value();
 	}
 
 	private String getKey(Method method) {
@@ -207,5 +230,46 @@ public class ConfigImpl<T extends Config> implements InvocationHandler {
 
 	private static String firstCharToLower(String word) {
 		return (word.isEmpty()) ? word : new StringBuilder(word.length()).append(Character.toLowerCase(word.charAt(0))).append(word.substring(1)).toString();
+	}
+
+	private final class ConfigOptionImpl implements ConfigSummary {
+		private final Method method;
+		private final String key;
+		private final String description;
+		private final Object defaultValue;
+
+		private ConfigOptionImpl(Method method, String key, String description, Object defaultValue) {
+			this.method = method;
+			this.key = key;
+			this.description = description;
+			this.defaultValue = defaultValue;
+		}
+
+		@Override
+		public boolean isRequired() {
+			// TODO Enhance to detect if default value satisfies validator
+			return defaultValue == null;
+		}
+
+		@Override
+		public String getKey() {
+			return key;
+		}
+
+		@Override
+		public String getDescription() {
+			return description;
+		}
+
+		@Override
+		public String getDefault() {
+			return defaultValue == null ? null : defaultValue.toString();
+		}
+
+		@Override
+		public String getValue() {
+			Object value = resolveConfigProperty(method, new Object[0]);
+			return value == null ? "" : value.toString();
+		}
 	}
 }

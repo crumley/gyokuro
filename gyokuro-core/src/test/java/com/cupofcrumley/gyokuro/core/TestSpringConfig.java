@@ -12,7 +12,6 @@ import org.springframework.mock.env.MockPropertySource;
 import com.cupofcrumley.gyokuro.config.Config;
 import com.cupofcrumley.gyokuro.config.KeyPrefix;
 import com.cupofcrumley.gyokuro.core.config.EnableConfig;
-import com.cupofcrumley.gyokuro.core.config.PropertyConfiguration;
 
 public class TestSpringConfig {
 	private MockPropertySource ps;

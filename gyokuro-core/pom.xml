@@ -20,7 +20,7 @@
 			<artifactId>gyokuro-config</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -49,6 +49,11 @@
 		<dependency>
 			<groupId>com.yammer.metrics</groupId>
 			<artifactId>metrics-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.beust</groupId>
+			<artifactId>jcommander</artifactId>
 		</dependency>
 
 	</dependencies>

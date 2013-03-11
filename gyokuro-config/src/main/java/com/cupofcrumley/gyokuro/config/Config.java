@@ -5,8 +5,25 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.List;
 
 public interface Config {
+	public void validate();
+
+	public List<ConfigSummary> getConfigSummary();
+
+	public interface ConfigSummary {
+		public boolean isRequired();
+
+		public String getKey();
+
+		public String getDefault();
+
+		public String getValue();
+
+		public String getDescription();
+	}
+
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.METHOD)
 	@interface Key {
@@ -53,6 +70,4 @@ public interface Config {
 	public @interface DefaultClassValue {
 		Class<?> value();
 	}
-
-	public void validate();
 }

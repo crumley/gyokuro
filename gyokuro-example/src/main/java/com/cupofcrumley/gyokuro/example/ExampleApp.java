@@ -1,14 +1,10 @@
 package com.cupofcrumley.gyokuro.example;
 
-import com.cupofcrumley.gyokuro.core.cli.GyokuroApp;
+import com.cupofcrumley.gyokuro.core.app.GyokuroApp;
 
 public class ExampleApp extends GyokuroApp {
-
-	public ExampleApp() {
-	}
-	
 	@Override
-	public Class<?> getSpringConfiguration() {
+	public Class<?> getSpringConfigurationClass() {
 		return ExampleConfiguration.class;
 	}
 	

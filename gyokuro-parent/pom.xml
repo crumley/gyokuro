@@ -37,6 +37,7 @@
 		<metrics.version>2.2.0</metrics.version>
 		<hibernatevalidator.version>4.2.0.Final</hibernatevalidator.version>
 		<guava.version>14.0-rc2</guava.version>
+		<jcommander.version>1.30</jcommander.version>
 
 		<maven.aspectj.plugin>1.4</maven.aspectj.plugin>
 		<maven.assembly.plugin>2.3</maven.assembly.plugin>
@@ -527,6 +528,12 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernatevalidator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.beust</groupId>
+				<artifactId>jcommander</artifactId>
+				<version>${jcommander.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

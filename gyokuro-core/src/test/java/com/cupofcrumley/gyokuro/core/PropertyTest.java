@@ -15,7 +15,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MapPropertySource;
 
-import com.cupofcrumley.gyokuro.core.config.PropertyConfiguration;
 
 public class PropertyTest {
 	@Configuration
